@@ -14,6 +14,16 @@ class kpmgStaff:
 
         kpmgStaff.count= kpmgStaff.count+1 #统计Kpmg员工数量
 
+    @classmethod
+    def get_count(cls):
+        # return cls.count
+        return KpmgStaff.count
+    @classmethod
+    def getCount(cls):#统计该职能员工数量
+        # print cls
+        return len(cls.member)
+
+
 class Consulant(kpmgStaff):
 #定义一个Kpmg职能为Consulant的员工信息的子类
     member=[] #定义该职能员工姓名列表
@@ -22,9 +32,6 @@ class Consulant(kpmgStaff):
         self.task=str(task)#定义子类特有属性：工作任务，字符串
         Consulant.member.append(staffName)
 
-    @staticmethod
-    def getCount():#统计该职能员工数量
-        return len(Consulant.member)
 
 class Partner(kpmgStaff):
 #定义一个Kpmg职能为Partner的员工信息的子类
@@ -34,10 +41,6 @@ class Partner(kpmgStaff):
         self.myProject=list(project)#定义子类特有属性：手中的项目，字符串
         Partner.member.append(staffName)
 
-    @staticmethod
-    def getCount():#统计该职能员工数量
-        return len(Partner.member)
-
 class Manager(kpmgStaff):
 #定义一个Kpmg职能为Manager的员工信息的子类
     member=[] #定义该职能员工姓名列表
@@ -46,9 +49,7 @@ class Manager(kpmgStaff):
         self.myBoy=list(boy)#定义子类特有属性：手下的小朋友列表，列表
         Manager.member.append(staffName)
 
-    @staticmethod
-    def getCount():#统计该职能员工数量
-        return len(Manager.member)
+
 
     def getMyboy(self):#返回手下小朋友的姓名列表
         myboyMember=[]
@@ -64,9 +65,7 @@ class SeniorManager(kpmgStaff):
         self.myManager=list(myManager)#定义子类特有属性：手下的经理列表，列表
         SeniorManager.member.append(staffName)
 
-    @staticmethod
-    def getCount():#统计该职能员工数量
-        return len(SeniorManager.member)
+
 
     def getMyManager(self):#返回手下Manager的姓名列表
         myManagerMember=[]
@@ -84,6 +83,9 @@ marry=Consulant(83459900,'Marry','FRM','Riskfactors')
 hanasaki=Consulant(89902501,'Hanasaki','FRM','modelDevelopment')
 mizuhara=Consulant(83297546,'Mizuhara','FRM','dataProcing')
 
+consulatns=[]
+consulatns.append(jinx)
+
 enzo=Manager(87920328,'Enzo','FRM',[curtis,kate,mizuhara])
 friedlich=Manager(84410028,'Friedlich','FRM',[curtis,jinx,hanasaki])
 alessandro=Manager(82016773,'Alessandro','FRM',[jack,rose,curtis,marry,jack])
@@ -97,10 +99,14 @@ david=Partner(87756731,'David','FRM',['ccbRisk','ccbValuation','cmbValidation'])
 print 'The total number of staff of KPMG is',kpmgStaff.count
 
 print 'The total number of Consulant is',Consulant.getCount()
+#3
+print len(Consulant.member)
+
 print 'The total number of Manager is',Manager.getCount()
+
 print 'The total number of SeniorManager is',SeniorManager.getCount()
 print 'The total number of Partner is',Partner.getCount()
-
+print 'The total number of Partner is',Partner.get_count()
 print 'The member of Consulant are',Consulant.member
 print 'The member of Manager are',Manager.member
 print 'The member of SeniorManager are',SeniorManager.member
