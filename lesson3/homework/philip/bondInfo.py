@@ -114,7 +114,7 @@ for line in islice(bondSet, 1, None):
 
     else:
         correctBonds.append(line)
-        bondID = line[0]
+        bondID = line[0] 
         startDate = datetime.datetime.strptime(line[1], "%Y-%m-%d")
         faceValue = float(line[2])
         tenor = int(line[3])
