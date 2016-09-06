@@ -30,9 +30,9 @@ try:
     # a=1/1
     a=1/0
 except Exception as e:
-    print 'hello'
-    print traceback.format_exc()
-    print e.message
+    # print 'hello'
+    # print traceback.format_exc()
+    # print e.message
     print sys.exc_info()
 else:
     print 'no issue'
