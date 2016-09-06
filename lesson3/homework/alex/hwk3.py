@@ -26,9 +26,10 @@ class BondError(Exception):
 
 csvw=csv.writer(file('cashflow.csv','w'))
 
-try:
-    csvread=csv.reader(file('fixedBond.csv','rt'))
-    for i in islice(csvread,1,None):
+
+csvread=csv.reader(file('fixedBond.csv','rt'))
+for i in islice(csvread,1,None):
+    try:
         if i[0].startswith('bond')<>True:
             raise BondError(i)
         else:
@@ -55,16 +56,16 @@ try:
             writer = csv.writer(file('cashflow.csv','ab'))
             for n in cash_list:
                 writer.writerow(n)
-            writer.writerow('\n')
+            writer.writerow("")
         encodedjson=json.dumps(cash_list,indent=2)
         print encodedjson
         print '\n'
 
-except IOError:
-    print u'Error:文件导入失败'
+    except IOError:
+        print u'Error:文件导入失败'
 
-except BondError:
-    print 'Error:bond error'
+    except BondError:
+        print 'Error:bond error'
 
 
 
