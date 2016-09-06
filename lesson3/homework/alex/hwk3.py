@@ -12,8 +12,7 @@ import datetime
 import csv
 import json
 from itertools import islice
-import sys
-import traceback
+
 
 class BondError(Exception):
     """ Bond Error"""
