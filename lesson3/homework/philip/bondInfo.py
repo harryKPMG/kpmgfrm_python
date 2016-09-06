@@ -59,7 +59,7 @@ class rateInputError(bondInputError):
 
 
 try:
-    bondSet = csv.reader(file('fixedBond.csv', 'r+'))
+    bondSet = csv.reader(file('../fixedBond.csv', 'r+'))
 except IOError:
     print u'Error:没有找到文件或读取文件失败'
 else:
