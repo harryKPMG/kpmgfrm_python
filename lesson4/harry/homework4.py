@@ -38,7 +38,7 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
                     cashFlow['cashFlow'].append(
                         float(fixedBond['FaceValue'][i]) * (rateYear / float(fixedBond['Freq'][i])))
     except:
-        print"注意：读取第%d笔交易时出现问题！\n" % (i + 1)
+        print"注意:读取第%d笔交易时出现问题！\n" % (i + 1)
         continue
 cashResults = pd.DataFrame(cashFlow, columns=['Order', 'BondId', 'Date', 'cashFlow'])
 #将cashFlow写入csv文件
