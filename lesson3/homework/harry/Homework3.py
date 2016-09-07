@@ -5,6 +5,7 @@ __author__ = 'harry'
 import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import json
 
 fixedBond = pd.read_csv('fixedBond.csv')
 cashFlow = {'Order': [], 'BondId': [], 'Date': [], 'cashFlow': []}
@@ -31,3 +32,10 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
         continue
 cashFlows = pd.DataFrame(cashFlow, columns=['Order', 'BondId', 'Date', 'cashFlow'])
 cashFlows.to_csv("cashflow.csv", index=False)
+x = fixedBond.to_json()
+print x
+
+
+
+
+
