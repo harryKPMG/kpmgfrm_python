@@ -27,7 +27,7 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
             else:
                 cashFlow['cashFlow'].append(float(fixedBond['FaceValue'][i]) * ratePay)
     except:
-        print"注意：读取第%d笔交易时出现问题！\n" % (i + 1)
+        print"注意：读取第%d笔交易时出现了问题！\n" % (i + 1)
         continue
 cashFlows = pd.DataFrame(cashFlow, columns=['Order', 'BondId', 'Date', 'cashFlow'])
 cashFlows.to_csv("cashflow.csv", index=False)
