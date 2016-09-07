@@ -33,10 +33,10 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
                 if t == num - 1:
                     cashFlow['cashFlow'].append(
                         float(fixedBond['FaceValue'][i]) + float(fixedBond['FaceValue'][i]) * (
-                        rateYear / int(fixedBond['Freq'][i])))
+                        rateYear / float(fixedBond['Freq'][i])))
                 else:
                     cashFlow['cashFlow'].append(
-                        float(fixedBond['FaceValue'][i]) * (rateYear / int(fixedBond['Freq'][i])))
+                        float(fixedBond['FaceValue'][i]) * (rateYear / float(fixedBond['Freq'][i])))
     except:
         print"注意：读取第%d笔交易时出现问题！\n" % (i + 1)
         continue
