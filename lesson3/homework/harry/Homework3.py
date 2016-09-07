@@ -32,8 +32,8 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
         continue
 cashFlows = pd.DataFrame(cashFlow, columns=['Order', 'BondId', 'Date', 'cashFlow'])
 cashFlows.to_csv("cashflow.csv", index=False)
-x = fixedBond.to_json()
-print x
+fixedjson = fixedBond.to_json()
+print fixedjson
 
 
 
