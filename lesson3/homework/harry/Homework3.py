@@ -7,15 +7,17 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import json
 
+# 读取债券信息
 fixedBond = pd.read_csv('fixedBond.csv')
 cashFlow = {'Order': [], 'BondId': [], 'Date': [], 'cashFlow': []}
 
+# 计算现金流
 for i in range(len(fixedBond[fixedBond.columns[0]])):
     order = 0
     try:
         num = int(fixedBond['tenor'][i]) * int(fixedBond['Freq'][i])
         monPay = 12 / int(fixedBond['Freq'][i])
-        ratePay = float(fixedBond['rate(year)'][i])
+        rateYear = float(fixedBond['rate(year)'][i])
         startDate = datetime.strptime((fixedBond['start'])[i], "%Y-%m-%d")
         for t in range(num):
             order += 1
@@ -24,18 +26,17 @@ for i in range(len(fixedBond[fixedBond.columns[0]])):
             cashFlow['Date'].append(startDate + relativedelta(months=monPay * (t + 1)))
             if t == num - 1:
                 cashFlow['cashFlow'].append(
-                    float(fixedBond['FaceValue'][i]) + float(fixedBond['FaceValue'][i]) * ratePay)
+                    float(fixedBond['FaceValue'][i]) + float(fixedBond['FaceValue'][i]) * (rateYear/int(fixedBond['Freq'][i])))
             else:
-                cashFlow['cashFlow'].append(float(fixedBond['FaceValue'][i]) * ratePay)
+                cashFlow['cashFlow'].append(float(fixedBond['FaceValue'][i]) * (rateYear/int(fixedBond['Freq'][i])))
     except:
         print"注意：读取第%d笔交易时出现了问题！\n" % (i + 1)
         continue
 cashFlows = pd.DataFrame(cashFlow, columns=['Order', 'BondId', 'Date', 'cashFlow'])
+
+#将cashFlow写入csv文件
 cashFlows.to_csv("cashflow.csv", index=False)
+
+#json格式
 fixedjson = fixedBond.to_json()
 print fixedjson
-
-
-
-
-
