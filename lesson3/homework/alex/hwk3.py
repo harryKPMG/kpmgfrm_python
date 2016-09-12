@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+import sqlite3
 __author__ = 'alexyli1'
 
 # 1. 读取fixedBond.csv中的债券信息. 如有异常,则显示异常
@@ -13,6 +14,11 @@ import csv
 import json
 from itertools import islice
 
+conn=sqlite3.connect('example.db')
+c = conn.cusor()
+
+c.excute('''    #sql语句
+''')
 
 class BondError(Exception):
     """ Bond Error"""
