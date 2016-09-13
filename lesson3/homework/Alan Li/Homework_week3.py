@@ -5,6 +5,7 @@ import datetime,calendar
 
 __author__ = 'afli'
 
+
 class ErrorBond(Exception):
     '''
     The defined exception about wrong Bond info.
@@ -28,7 +29,9 @@ for i in csv1:
             raise ErrorBond(1)
         else:
             ref.append(i)
-    except ErrorBond as e:
+    except EmptyBond as e:
+        asf
+    except WrongRateBond as e:
         if e.type==0:
             print '"ErrorBond" exception: Empty Data.'
         elif e.type==1:

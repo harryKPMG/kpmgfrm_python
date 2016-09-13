@@ -17,43 +17,43 @@ __author__ = 'philip'
 # 4. 将债券的信息存储为.json格式,并再界面上显示
 # 5. 交作业的时候 请在homework作业下,建立自己的文件夹,并提交文件
 
-class bondInputError(Exception):
+class BondInputError(Exception):
     def __init__(self, argument):
         Exception.__init__(self)
         self.argument = argument
 
 
-class IDInputError(bondInputError):
+class IDInputError(BondInputError):
     def __init__(self, bondID):
         Exception.__init__(self, bondID)
         self.bondID = bondID
         print 'bondID=', bondID, u'输入的ID格式错误'
 
 
-class startDateInputError(bondInputError):
+class StartDateInputError(BondInputError):
     def __init__(self, bondID, startDate):
-        bondInputError.__init__(self, bondID)
+        BondInputError.__init__(self, bondID)
         self.startDate = startDate
         print bondID, u'输入的开始日期', startDate, u'格式错误'
 
 
-class tenorInputError(bondInputError):
+class TenorInputError(BondInputError):
     def __init__(self, bondID, tenor):
-        bondInputError.__init__(self, bondID)
+        BondInputError.__init__(self, bondID)
         self.startDate = tenor
         print bondID, u'输入的存续期', tenor, u'格式错误'
 
 
-class frequencyInputError(bondInputError):
+class FrequencyInputError(BondInputError):
     def __init__(self, bondID, frequency):
-        bondInputError.__init__(self, bondID)
+        BondInputError.__init__(self, bondID)
         self.frequency = frequency
         print bondID, u'输入的付息频率', frequency, u'格式错误'
 
 
-class rateInputError(bondInputError):
+class rateInputError(BondInputError):
     def __init__(self, bondID, rate):
-        bondInputError.__init__(self, bondID)
+        BondInputError.__init__(self, bondID)
         self.rate = rate
         print bondID, u'输入的票面利率', rate, u'格式错误'
 
@@ -74,45 +74,58 @@ bondDict = {}
 
 for line in islice(bondSet, 1, None):
 
-    try:
-        if line[0].startswith('bond') <> True:
-            raise IDInputError(line[0])
+        try:
+            if line[0].startswith('bond') <> True:
+                raise IDInputError(line[0])
+        except IDInputError as e:
+            print e.message
+            print 'error1'
+            line[0]='bond4'
 
-        if line[1].find('-') == -1:
-            raise startDateInputError(line[0], line[1])
+        try:
+            if line[1].find('-') == -1:
+                raise StartDateInputError(line[0], line[1])
 
-        if line[3] < 0:
-            raise tenorInputError(line[0], line[3])
+        except StartDateInputError as e:
+            print e.message
+            print 'error2'
+            line[1]='2016-09-03'
 
-        if line[4] not in ['1', '2', '6', '12', '4']:
-            raise frequencyInputError(line[0], line[4])
+        try:
+            if line[3] < 0:
+                raise TenorInputError(line[0], line[3])
 
-        if float(line[5]) > 0.5:
-            raise rateInputError(line[0], line[5])
+            if line[4] not in ['1', '2', '6', '12', '4']:
+                raise FrequencyInputError(line[0], line[4])
 
-    except IDInputError:
-        line[0] = 'bond' + str(int(100 * rd()))
+            if float(line[5]) > 0.5:
+                raise rateInputError(line[0], line[5])
 
-    except startDateInputError:
-        pass
+        except IDInputError:
+            line[0] = 'bond' + str(int(100 * rd()))
 
-    except tenorInputError:
-        pass
+        except StartDateInputError:
+            pass
 
-    except frequencyInputError:
-        pass
+        except TenorInputError:
+            pass
 
-    except rateInputError:
-        line[5] = float(line[5]) * 0.01
+        except FrequencyInputError:
+            pass
 
-    except Exception as e:
-        print traceback.format_exc()
-        print e.message
-        print sys.exc_info()
+        except rateInputError:
+            line[5] = float(line[5]) * 0.01
 
+        except Exception as e:
+            print traceback.format_exc()
+            print e.message
+            print sys.exc_info()
+        try:
+            a=startDate.strftime("%Y-%m-%d")
+            raise  DateFormaError('')
+        except:
+            a=startDate.strftime('2016-07-09')
 
-
-    else:
         correctBonds.append(line)
         bondID = line[0] 
         startDate = datetime.datetime.strptime(line[1], "%Y-%m-%d")
