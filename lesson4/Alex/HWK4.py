@@ -2,34 +2,40 @@
 # -*- coding:utf-8 -*-
 __author__ = 'alexyli1'
 
-# 1. 读取fixedBond.csv中的债券信息. 如有异常,则显示异常
-# 2. 计算每一个债券的现金流信息
-# 3. 将每一个债券的现金流信息存储导cashflow.csv文件. order代表现金流顺序id,date代表现金流发生时间,cashflow是现金流的金额
-# 4. 将债券的信息存储为.json格式,并再界面上显示
-# 5. 交作业的时候 请在homework作业下,建立自己的文件夹,并提交文件
+# 1.在第3次作业的基础上，读取新的fixedBond文件，计算现金流
+# 2.将cashflow写入数据库(sqlite)
 
 import datetime
 import csv
 import json
 from itertools import islice
+import sqlite3
+
+conn=sqlite3.connect('cashflow.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE CashFlow
+(ID, Date date, cashFlow real)''')
 
 class BondError(Exception):
-    """ Bond Error"""
+    """ Bond Input Error"""
     def __init__(self, argument):
         Exception.__init__(self)
-        print 'bond:',argument,'exit error'
-
-# filename='/Users/alexyli1/PycharmProjects/kpmgfrm_python/lesson3/homework/fixedBond.csv'
-# csvr=csv.reader(file(filename,'rt'))
-
-csvw=csv.writer(file('cashflow.csv','w'))
-
+        print 'Line',argument,'exit error info'
 
 csvread=csv.reader(file('fixedBond.csv','rt'))
+count=0
+
 for i in islice(csvread,1,None):
+    count=count+1
     try:
-        if i[0].startswith('bond')<>True:
-            raise BondError(i)
+        try:
+            error=0
+            float(i[5])
+        except:
+            error=1
+
+        if error==1:
+            raise BondError(count)
         else:
             bond_name=str(i[0])
             # BondId,start,FaceValue,tenor,Freq,rate(year)
@@ -50,21 +56,17 @@ for i in islice(csvread,1,None):
                 else:
                     cash_flow.append('%.2f' %(face_value*(1+rate)/freq))
                 cash_list.append(cash_flow)
+            for x in range(0,len(cash_list)):
+                cash_list[x]=tuple(cash_list[x])
             print cash_list
-            writer = csv.writer(file('cashflow.csv','ab'))
-            for n in cash_list:
-                writer.writerow(n)
-            writer.writerow("")
-        encodedjson=json.dumps(cash_list,indent=2)
-        print encodedjson
-        print '\n'
+            #将cashFlow写入数据库中
+            c.executemany('INSERT INTO CashFlow VALUES (?,?,?)', cash_list)
 
     except IOError:
         print u'Error:文件导入失败'
 
     except BondError:
-        print 'Error:bond error'
+        continue
 
-
-
-
+conn.commit()
+c.close()

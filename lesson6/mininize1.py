@@ -13,12 +13,12 @@ def f(x):
 
     return z
 
-# output=True
+output=False
 ret= spo.brute(f,((-10,10.1,5),),finish=None)
 print ret, f(ret)
 ret1= spo.brute(f,((-10,10.1,0.1),),finish=None)
 print ret1, f(ret1)
-ret2= spo.fmin(f,ret1)
+ret2= spo.fmin(f,ret1) #fsolve
 print ret2, f(ret2)
 
 
