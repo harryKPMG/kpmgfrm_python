@@ -1,6 +1,7 @@
 # !/usr/bin/env python
 # -*- coding:utf-8 -*-
 import pytest
+#http://docs.pytest.org/
 __author__ = 'frm.kpmg'
 def func(x):
     return x+1
