@@ -19,8 +19,15 @@ def call_option_pricer(sigma,s, k, t, r, pv):
     d2 = d1 -sigma * sqrt(t)
     return s * norm.cdf(d1) - k * exp(-r*t) * norm.cdf(d2)-pv
 
-result = opt.fsolve(call_option_pricer,[1.0],(s,k,t,r,pv))
-a= (k,t,result)
-print a
+result = opt.fsolve(call_option_pricer,[1.0],(s,k,t,r,pv))[0]
+a = (k,t,result)
 
+
+t=1.0
+k=2.50
+
+result = opt.fsolve(call_option_pricer,[1.0],(s,k,t,r,pv))[0]
+b = (k,t,result)
+
+print a,b
 
