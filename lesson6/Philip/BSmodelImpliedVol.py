@@ -42,4 +42,4 @@ t0, k0 = np.meshgrid(t, strike)
 sigma0 = volGenerator(t0, k0)
 print sigma0
 sigmaCubic = Interpolation.interp2d(t, strike, sigma0, kind='cubic')
-print sigmaCubic(1 / 12, 1.1)
+print sigmaCubic(1. / 12, 1.1)

@@ -22,7 +22,8 @@ import scipy.optimize as opt
 
 
 def f(x,a):
-    return x**2+a*x-1
+    y=x**2+a*x
+    return y-1
 
 result =opt.fsolve(f,[-0.5],(3))
 
@@ -36,3 +37,4 @@ def  f1(x,rf=0.01):
 
 result=opt.fsolve(f1,[1,2,3])
 print result
+print f1(result)

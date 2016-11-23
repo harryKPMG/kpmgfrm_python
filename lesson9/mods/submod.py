@@ -5,7 +5,7 @@ __author__ = 'frm.kpmg'
 
 import logging
 
-logger=logging.getLogger('main.mod.submod')
+logger=logging.getLogger('submod')
 logger.info('logger of submod say something...')
 
 def tst():
